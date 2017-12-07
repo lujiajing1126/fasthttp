@@ -1330,6 +1330,9 @@ func acquireClientConn(conn net.Conn) *clientConn {
 
 func releaseClientConn(cc *clientConn) {
 	cc.c = nil
+	// reset client connection for the bug
+	// https://github.com/valyala/fasthttp/pull/259
+	cc = &clientConn{}
 	clientConnPool.Put(cc)
 }
 
